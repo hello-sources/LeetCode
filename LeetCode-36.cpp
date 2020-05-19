@@ -9,7 +9,6 @@
 using namespace std;
 
 
-
 class Solution {
 public:
     int x[9], y[9], z[9];
