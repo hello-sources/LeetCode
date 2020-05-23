@@ -8,9 +8,9 @@
 #include <iostream>
 using namespace std;
 
+
 class Solution {
 public:
-    //并查集
     struct UnionSet {
         int *fa, cnt;
         UnionSet(int n) {
@@ -30,30 +30,29 @@ public:
             fa[get(a)] = get(b);
             return 1;
         }
-    };
+    }; 
     vector<int> findRedundantDirectedConnection(vector<vector<int>>& edges) {
-        int indeg[edges.size() + 1];//入度
-        int outdeg[edges.size() + 1];//出度
+        int indeg[edges.size() + 1];
+        int outdeg[edges.size() + 1];
         int fa[edges.size() + 1];
-        int flag = -1;
-        int vis[edges.size() + 1];//标记数组
+        int vis[edges.size() + 1];
         memset(indeg, 0, sizeof(indeg));
         memset(outdeg, 0, sizeof(outdeg));
         memset(fa, 0, sizeof(fa));
         memset(vis, 0, sizeof(vis));
-       vector<int> ret;
+        int flag = -1;
         for (int i = 0; i < edges.size(); i++) {
             int u = edges[i][0];
             int v = edges[i][1];
             indeg[v] += 1;
             outdeg[u] += 1;
-            fa[v] = u;
+            fa[v] = u; 
             if (indeg[v] == 2) flag = v;
         }
         if (flag != -1) {
             for (int i = edges.size() - 1; i >= 0; i--) {
                 if (flag - edges[i][1]) continue;
-                UnionSet u(edges.size() + 1);
+                UnionSet u(edges.size());
                 for (int j = 0; j < edges.size(); j++) {
                     if (i == j) continue;
                     u.merge(edges[j][0], edges[j][1]);
@@ -62,7 +61,6 @@ public:
                 return edges[i];
             }
         }
-        //队列表示拓扑序
         queue<int> q;
         for (int i = 1; i <= edges.size(); i++) {
             if (outdeg[i] == 0) q.push(i);
@@ -80,6 +78,6 @@ public:
             if (vis[u] || vis[v]) continue;
             return edges[i];
         }
-        return edges[0];//没用的但是为了程序完整性，项目可读性
+        return edges[0]; // 没用的
     }
 };
