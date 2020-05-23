@@ -8,9 +8,9 @@
 #include <iostream>
 using namespace std;
 
-
 class Solution {
 public:
+    //并查集
     struct UnionSet {
         int *fa, cnt;
         UnionSet(int n) {
@@ -32,11 +32,11 @@ public:
         }
     };
     vector<int> findRedundantDirectedConnection(vector<vector<int>>& edges) {
-        int indeg[edges.size() + 1];
-        int outdeg[edges.size() + 1];
+        int indeg[edges.size() + 1];//入度
+        int outdeg[edges.size() + 1];//出度
         int fa[edges.size() + 1];
         int flag = -1;
-        int vis[edges.size() + 1];
+        int vis[edges.size() + 1];//标记数组
         memset(indeg, 0, sizeof(indeg));
         memset(outdeg, 0, sizeof(outdeg));
         memset(fa, 0, sizeof(fa));
@@ -62,6 +62,7 @@ public:
                 return edges[i];
             }
         }
+        //队列表示拓扑序
         queue<int> q;
         for (int i = 1; i <= edges.size(); i++) {
             if (outdeg[i] == 0) q.push(i);
